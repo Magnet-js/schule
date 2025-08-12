@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    networks:
+      - app-network
+    ports:
+      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_HOST}"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    read_only: true
+    networks:
+      - app-network
+    ports:
+      - "${PORT}:${BACKEND_PORT}"
+    environment:
+      - DB_HOST_CONTAINER=${DB_HOST_CONTAINER}
+      - DATABASE_URL=${DATABASE_URL}
+      - DOCKER_ENV=true
+      - POSTGRES_PORT=${POSTGRES_PORT_CONTAINER}
+      - POSTGRES_PORT_HOST=${POSTGRES_PORT_HOST}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PORT=${BACKEND_PORT}
+      - BACKEND_ROUTE=${BACKEND_ROUTE}
+      - FRONTEND_ROUTE=${FRONTEND_ROUTE}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3302:3302"
+    environment:
+      - BACKEND_ROUTE=${BACKEND_ROUTE}
+      - FRONTEND_ROUTE=${FRONTEND_ROUTE}
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
