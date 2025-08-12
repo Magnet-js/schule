@@ -1,0 +1,12 @@
+# Shared 
+/documentation/ @Magnet-js @Lexn06 @Sono304
+/.github/ @Magnet-js @Lexn06 @Sono304
+/frontend/ @Lexn06 @Sono304
+
+# Magnet-js
+/backend/ @Magnet-js
+/.env @Magnet-js
+/docker-compose.yml @Magnet-js
+
+# Lexn06
+/.gitignore @Lexn06
