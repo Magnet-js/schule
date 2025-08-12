@@ -3,7 +3,8 @@
 
 - Gibt es Design vorgaben?
 
-- 
+- Sollen Lehrer ebenfalls zugriff haben?
+- Braucht es funktionalität für Administratoren?
 
 
 
