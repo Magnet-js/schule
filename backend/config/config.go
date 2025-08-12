@@ -18,7 +18,6 @@ func MustLoadConfig() *Config {
 	cfg := &Config{
 		Port:        os.Getenv("PORT"),
 		DatabaseURL: os.Getenv("DATABASE_URL"),
-
 	}
 
 	if cfg.DatabaseURL == "" {
