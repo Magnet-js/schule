@@ -5,7 +5,7 @@ services:
     networks:
       - app-network
     ports:
-      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_HOST}"
+      - "${POSTGRES_PORT_HOST}:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
