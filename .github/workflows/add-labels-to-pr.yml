@@ -1,0 +1,59 @@
+# @format
+
+name: "Add labels to PR"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  apply-label:
+    runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const prTitle = context.payload.pull_request.title.toLowerCase()
+            const labels = []
+
+            if (/^fix(\:|\(|\b)/.test(prTitle)) {
+              labels.push('bug')
+            } else if (prTitle.includes('docs')) {
+              labels.push('documentation')
+            } else if (prTitle.includes('test')) {
+              labels.push('tests')
+            } else if (prTitle.includes('chore')) {
+              labels.push('chore')
+            } else {
+              labels.push('enhancement')
+            }
+
+            const changedFiles = await github.paginate(
+              github.rest.pulls.listFiles,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number
+              }
+            )
+
+            const hasBackendChanges = changedFiles.some(file => file.filename.startsWith('backend/'))
+            const hasFrontendChanges = changedFiles.some(file => file.filename.startsWith('frontend/'))
+            const hasGithubActionsChanges = changedFiles.some(file => file.filename.startsWith('.github/workflows/'))
+
+            if (hasBackendChanges) labels.push('backend')
+            if (hasFrontendChanges) labels.push('frontend')
+            if (hasGithubActionsChanges) labels.push('github-actions')
+
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [...new Set(labels)],
+            })
