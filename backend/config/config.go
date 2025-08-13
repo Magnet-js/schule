@@ -9,7 +9,7 @@ import (
 
 type Config struct {
 	DatabaseURL string `env:"DATABASE_URL,required"`
-	Port        string `env:"PORT,default=8080"`
+	Port        string `env:"PORT,default=8800"`
 }
 
 func MustLoadConfig() *Config {
