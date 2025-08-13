@@ -27,7 +27,7 @@ services:
     networks:
       - app-network
     ports:
-      - "${PORT}:${BACKEND_PORT}"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
       - DB_HOST_CONTAINER=${DB_HOST_CONTAINER}
       - DATABASE_URL=${DATABASE_URL}
