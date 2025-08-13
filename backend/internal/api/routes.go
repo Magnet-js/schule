@@ -12,5 +12,4 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 	version.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "ok"})
 	})
-	/* auth.RegisterRoutes(version.Group("/auth"), db) */
 }
