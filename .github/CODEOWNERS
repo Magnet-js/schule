@@ -5,7 +5,7 @@
 
 # Magnet-js
 /backend/ @Magnet-js
-/.env @Magnet-js
+/.env.example @Magnet-js
 /docker-compose.yml @Magnet-js
 
 # Lexn06
