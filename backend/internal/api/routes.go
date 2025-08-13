@@ -6,7 +6,6 @@ import (
 )
 
 func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
-	// API-Gruppen
 	api := r.Group("/api")
 	version := api.Group("/v1")
 
