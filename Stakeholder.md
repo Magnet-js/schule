@@ -6,7 +6,7 @@
 - Sollen Lehrer ebenfalls zugriff haben?
 - Braucht es funktionalität für Administratoren?
 
-
+- Kann das tool aus dem öffentlichen netzwerk ähnlich wie die nextcloud erreichbar sein kann?
 
 
 
