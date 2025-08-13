@@ -6,7 +6,7 @@ This is a sample documentation for a simple REST API backend that manages ToDo i
 
 ## 🌐 Base URL
 
-https://example.com/api/v1
+example.com/api/v1
 
 ---
 
