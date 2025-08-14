@@ -1,7 +1,8 @@
+import { BackendRoute } from "@/static";
 import axios, { AxiosError } from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL: BackendRoute,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
