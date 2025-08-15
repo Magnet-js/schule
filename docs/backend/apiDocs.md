@@ -28,3 +28,80 @@ example.com/api/v1
     "status": "ok"
 }
 ```
+
+### PUT /forms
+
+**Description:** Create a new form based on the body
+
+**Body:**
+```json
+{
+    "title": "Schüler Stammdaten",
+    "description": "Erfassung der grundlegenden Schülerdaten",
+    "multi_viewable": true,
+    "approve_needed": false,
+    "body": {
+        "questions": [
+            {
+                "id": "student_name",
+                "type": "text",
+                "label": "Vollständiger Name",
+                "required": true,
+                "maxLength": 100
+            },
+            {
+                "id": "email",
+                "type": "email",
+                "label": "E-Mail-Adresse",
+                "required": true,
+                "validation": {
+                    "pattern": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"
+                }
+            },
+            {
+                "id": "class",
+                "type": "select",
+                "label": "Klasse",
+                "required": true,
+                "options": [
+                    {
+                        "value": "10a",
+                        "label": "10a"
+                    },
+                    {
+                        "value": "10b",
+                        "label": "10b"
+                    },
+                    {
+                        "value": "11a",
+                        "label": "11a"
+                    }
+                ]
+            }
+        ]
+    },
+    "form_editors": {
+        "users": [
+            "user2"
+        ]
+    },
+    "form_viewer": {
+        "groups": [
+            "everyone"
+        ]
+    },
+    "form_approvers": {
+        "groups": [
+            "teacher"
+        ],
+        "users": [
+            "user1",
+            "user2"
+        ]
+    }
+}
+```
+
+**Response:**
+
+- **Status Code:** `201 Created`
