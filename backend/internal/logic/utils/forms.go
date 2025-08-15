@@ -13,11 +13,14 @@ func ValidateForm(form *model.Form) error {
 	if form.Description == "" {
 		return errors.New("description is required")
 	}
-	if form.MaxSubmitsPerUser <= 0 {
-		return errors.New("max submits per user must be positive")
-	}
 	if form.Body == nil {
 		return errors.New("body is required")
+	}
+	if form.FormEditors.Groups == nil && form.FormEditors.Users == nil {
+		return errors.New("at least one form editor is required")
+	}
+	if form.FormViewer.Groups == nil && form.FormViewer.Users == nil {
+		return errors.New("at least one form viewer is required")
 	}
 	// TODO implement body validation
 	return nil

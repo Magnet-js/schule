@@ -34,7 +34,11 @@ func (s *FormsService) CreateForm(form *model.Form) error {
 		Title:             form.Title,
 		Description:       form.Description,
 		Body:              utils.InterfaceToBytes(form.Body),
-		MaxSubmitsPerUser: form.MaxSubmitsPerUser,
+		MultiViewable:     form.MultiViewable,
+		ApproveNeeded:     form.ApproveNeeded,
+		FormEditors:       models.FormRole(form.FormEditors),
+		FormViewer:        models.FormRole(form.FormViewer),
+		FormApprovers:     models.FormRole(form.FormApprovers),
 	}
 
 	return s.repo.Create(dbForm)
@@ -50,7 +54,11 @@ func (s *FormsService) UpdateForm(form *model.Form) error {
 		Title:             form.Title,
 		Description:       form.Description,
 		Body:              utils.InterfaceToBytes(form.Body),
-		MaxSubmitsPerUser: form.MaxSubmitsPerUser,
+		MultiViewable:     form.MultiViewable,
+		ApproveNeeded:     form.ApproveNeeded,
+		FormEditors:       models.FormRole(form.FormEditors),
+		FormViewer:        models.FormRole(form.FormViewer),
+		FormApprovers:     models.FormRole(form.FormApprovers),
 	}
 
 	return s.repo.Update(dbForm)
